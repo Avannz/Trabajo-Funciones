@@ -9,6 +9,12 @@ int menor (Pila *pila1);
 void ordenarSeleccion (Pila *pila1, Pila *pila2);
 void insertar (Pila *pila1, Pila *pila2);
 void ordenarInsercion(Pila *pila1);
+int suma (Pila *pila1);
+int sumarTodo (Pila *pila1);
+int validos (Pila *pila1);
+float dividir (int val1, int val2);
+float promedio(Pila *pila1);
+int pasaje (Pila *pila1);
 int main()
 {
 
@@ -20,13 +26,13 @@ int main()
     inicpila(&aux3);
 
     int xd;
+    float prom;
 
 
     cargar(&dada);                          //PUNTO 1
     mostrar(&dada);
 
     /*mover(&dada, &aux1);                  //PUNTO 2
-
     mostrar(&aux1);*/
 
    /* mismoOrden(&dada, &aux1);             //PUNTO 3
@@ -48,6 +54,20 @@ int main()
 
     /*ordenarInsercion(&dada);              //PUNTO 7
     mostrar(&dada);*/
+
+    /*xd = suma(&dada);
+    printf("PILA SUMADA: %d", xd);          //PUNTO 8
+    */
+
+
+
+    /*xd = sumarTodo(&dada);
+    printf("La suma total de la pila es de: %i", xd);
+    mostrar(&dada);*/
+
+    xd = pasaje(&dada);
+    printf("El numero es: %d", xd);
+
 }
 
 void cargar(Pila *pila1)
@@ -174,4 +194,101 @@ void ordenarInsercion(Pila *pila1){
     }
 
     mover (&aux, pila1);
+}
+
+int suma (Pila *pila1){
+    Pila aux;
+    inicpila(&aux);
+
+    int suma;
+
+    apilar(&aux, desapilar(pila1));
+
+    suma = tope(pila1) + tope(&aux);
+    return suma;
+}
+
+int sumarTodo (Pila *pila1) {
+
+    Pila aux;
+    inicpila(&aux);
+
+    int suma = 0;
+
+    while(!pilavacia(pila1)){
+
+        suma = tope(pila1) + suma;
+
+        apilar(&aux, desapilar(pila1));
+
+    }
+
+        mover(&aux, pila1);
+
+    return suma;
+}
+
+int validos (Pila *pila1){
+    Pila aux;
+    inicpila(&aux);
+
+    int cont = 0;
+
+    while(!pilavacia(pila1)){
+
+        cont++;
+        apilar (&aux, desapilar(pila1));
+    }
+
+    mover (&aux, pila1);
+    return cont;
+}
+
+float dividir (int val1, int val2){
+
+    float resto = 0;
+
+    resto = (float)val1 / val2;
+
+    return resto;
+}
+
+float promedio(Pila *pila1){
+
+    float dividendo = 0;
+    float promedio = 0;
+    int divisor = 0;
+
+    dividendo = sumarTodo(pila1);
+    divisor = validos(pila1);
+
+    promedio = dividendo/divisor;
+
+    return promedio;
+}
+
+int pasaje (Pila *pila1){
+
+    Pila aux;
+    inicpila(&aux);
+
+    int valor=0;
+    int i = 1;
+
+    while (!pilavacia(pila1)){
+
+        apilar(&aux, desapilar(pila1));
+
+    }
+
+    while (!pilavacia(&aux)){
+
+        valor = valor + (tope(&aux) * i);
+        i = i*10;
+
+        apilar(pila1, desapilar(&aux));
+
+    }
+
+    return valor;
 }
